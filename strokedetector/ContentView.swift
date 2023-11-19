@@ -117,7 +117,7 @@ struct ResultsView: View {
     
     // Function to initiate the emergency call
     func makeEmergencyCall() {
-        guard let phoneURL = URL(string: "tel://5879202662"), UIApplication.shared.canOpenURL(phoneURL) else {
+        guard let phoneURL = URL(string: "tel://911"), UIApplication.shared.canOpenURL(phoneURL) else {
             return
         }
         UIApplication.shared.open(phoneURL)
