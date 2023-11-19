@@ -71,7 +71,7 @@ struct ResultsView: View {
                 .font(.title)
                 .padding()
 
-            if let response = apiResponse, response != "1" {
+            if let response = apiResponse, response == "1" {
 
                 VStack {
                     Button(action: {
@@ -97,16 +97,8 @@ struct ResultsView: View {
                 }
             } else {
                 Text("Don't Call 911")
-                    .foregroundColor(.red)
+                    .foregroundColor(.green)
                     .padding()
-
-                if let currentLocation = location {
-                    Text("Current Location: \(currentLocation.latitude), \(currentLocation.longitude)")
-                        .padding()
-                } else {
-                    Text("Location not available")
-                        .padding()
-                }
             }
         }
         .onAppear {
