@@ -1,30 +1,29 @@
 import SwiftUI
-import CoreLocation
 
 struct ContentView: View {
     @State private var isImagePickerPresented = false
     @State private var selectedImage: UIImage?
-    @State private var apiResponse: String?
-    @State private var isShowingResults = false
-
+    @State private var apiResponse: String? // Store API response
+    
     var body: some View {
         NavigationView {
             VStack {
+                // Display the taken selfie
                 if let image = selectedImage {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
                         .padding()
-
+                    
+                    // Button to send the image to the API
                     Button("Send to API") {
                         if let imageData = image.jpegData(compressionQuality: 0.9) {
                             sendImageToAPI(imageData: imageData)
-                            // Set the flag to show results view
-                            isShowingResults = true
                         }
                     }
                     .padding()
-
+                    
+                    // Display API response
                     if let response = apiResponse {
                         Text("API Response: \(response)")
                             .padding()
@@ -33,7 +32,8 @@ struct ContentView: View {
                     Text("No selfie taken")
                         .padding()
                 }
-
+                
+                // Button to open the camera for taking a selfie
                 Button("Take Selfie") {
                     isImagePickerPresented.toggle()
                 }
@@ -43,93 +43,53 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Stroke Detector App")
-            .background(
-                NavigationLink(
-                    destination: ResultsView(apiResponse: $apiResponse),
-                    isActive: $isShowingResults,
-                    label: { EmptyView() }
-                )
-            )
         }
     }
-
+    
+    // Function to send the image to the API
     func sendImageToAPI(imageData: Data) {
-        // Your existing API request logic
-
-        // For example, updating the response
-        apiResponse = "API Response Placeholder"
+        // Replace "https://strokedetectorr-73f341eb8a5b.herokuapp.com/api/" with your actual API endpoint
+        let apiUrlString = "http:172.20.10.9:8000/api/"
+        
+        guard let apiUrl = URL(string: apiUrlString) else {
+            print("Invalid API URL")
+            return
+        }
+        
+        var request = URLRequest(url: apiUrl)
+        request.httpMethod = "POST"
+        
+        let boundary = "Boundary-\(UUID().uuidString)"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        var body = Data()
+        body.append(Data("--\(boundary)\r\n".utf8))
+        body.append(Data("Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n".utf8))
+        body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+        body.append(imageData)
+        body.append(Data("\r\n--\(boundary)--\r\n".utf8))
+        
+        request.httpBody = body
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+            } else if let data = data {
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print("API Response: \(responseString)")
+                    
+                    // Update the state variable with API response
+                    DispatchQueue.main.async {
+                        self.apiResponse = responseString
+                    }
+                }
+            }
+        }.resume()
     }
 }
 
-struct ResultsView: View {
-    @Binding var apiResponse: String?
-    @State private var location: CLLocationCoordinate2D?
-
-    var body: some View {
-        VStack {
-            Text("Results")
-                .font(.title)
-                .padding()
-
-            if let response = apiResponse, response == "1" {
-
-                VStack {
-                    Button(action: {
-                        makeEmergencyCall()
-                    }) {
-                        Text("Call 911")
-                            .foregroundColor(.red)
-                            .padding()
-                    }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.red, lineWidth: 2)
-                    )
-                    .padding()
-                    
-                    if let currentLocation = location {
-                        Text("Current Location: \(currentLocation.latitude), \(currentLocation.longitude)")
-                            .padding()
-                    } else {
-                        Text("Location not available")
-                            .padding()
-                    }
-                }
-            } else {
-                Text("Don't Call 911")
-                    .foregroundColor(.green)
-                    .padding()
-            }
-        }
-        .onAppear {
-            getLocation()
-        }
-        .navigationTitle("Results")
-    }
-    
-    // Function to initiate the emergency call
-    func makeEmergencyCall() {
-        guard let phoneURL = URL(string: "tel://911"), UIApplication.shared.canOpenURL(phoneURL) else {
-            return
-        }
-        UIApplication.shared.open(phoneURL)
-    }
-    
-    func getLocation() {
-        // Use Core Location to get the current location
-        // Make sure to handle location permissions in your app
-        // Here, I'm using a simple CLLocationManager setup for demonstration purposes
-
-        let locationManager = CLLocationManager()
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestWhenInUseAuthorization()
-            locationManager.startUpdatingLocation()
-
-            if let location = locationManager.location?.coordinate {
-                self.location = location
-            }
-        }
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
