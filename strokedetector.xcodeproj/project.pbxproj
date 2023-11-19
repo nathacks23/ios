@@ -14,6 +14,7 @@
 		07F5242A2B09F1EC00EDC0DF /* strokedetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F524292B09F1EC00EDC0DF /* strokedetectorTests.swift */; };
 		07F524342B09F1EC00EDC0DF /* strokedetectorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F524332B09F1EC00EDC0DF /* strokedetectorUITests.swift */; };
 		07F524362B09F1EC00EDC0DF /* strokedetectorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F524352B09F1EC00EDC0DF /* strokedetectorUITestsLaunchTests.swift */; };
+		07F524432B09F3A100EDC0DF /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F524422B09F3A100EDC0DF /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		07F5242F2B09F1EC00EDC0DF /* strokedetectorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = strokedetectorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07F524332B09F1EC00EDC0DF /* strokedetectorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = strokedetectorUITests.swift; sourceTree = "<group>"; };
 		07F524352B09F1EC00EDC0DF /* strokedetectorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = strokedetectorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		07F524422B09F3A100EDC0DF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				07F524182B09F1EA00EDC0DF /* strokedetectorApp.swift */,
 				07F5241A2B09F1EA00EDC0DF /* ContentView.swift */,
+				07F524422B09F3A100EDC0DF /* ImagePicker.swift */,
 				07F5241C2B09F1EC00EDC0DF /* Assets.xcassets */,
 				07F5241E2B09F1EC00EDC0DF /* Preview Content */,
 			);
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F524432B09F3A100EDC0DF /* ImagePicker.swift in Sources */,
 				07F5241B2B09F1EA00EDC0DF /* ContentView.swift in Sources */,
 				07F524192B09F1EA00EDC0DF /* strokedetectorApp.swift in Sources */,
 			);
@@ -417,8 +421,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"strokedetector/Preview Content\"";
+				DEVELOPMENT_TEAM = 599B8K9J9L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for taking selfies.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need it for your safety incase of stroke";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need it for your safety";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -445,8 +453,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"strokedetector/Preview Content\"";
+				DEVELOPMENT_TEAM = 599B8K9J9L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera for taking selfies.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need it for your safety incase of stroke";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need it for your safety";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
